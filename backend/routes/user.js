@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const signupBody = require("../Validtion/signup.js")
 const signinBody = require("../Validtion/signin.js")
-const { User } = require("../db.js")
+const { User,Account } = require("../db.js")
 const jwt = require("jsonwebtoken"); 
 const { JWT_SECRET } = require('../config');
 const {authMiddleWare} = require("../Auth/middleware.js")
@@ -26,7 +26,7 @@ router.post("/signup",async (req, res) => {
         })
     }
 
-    const user = User.create({
+    const user = await User.create({
         username: req.body.username,
         password: req.body.password,
         firstName: req.body.firstName,
@@ -34,6 +34,13 @@ router.post("/signup",async (req, res) => {
     })
 
     const userId = user._id;
+
+    await Account.create({
+        userId,
+        balance:1+Math.random()*1000
+    })
+
+
 
     const token = jwt.sign({ userId }, JWT_SECRET);
 

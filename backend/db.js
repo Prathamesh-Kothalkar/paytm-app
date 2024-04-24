@@ -9,6 +9,16 @@ const userSchema = mongoose.Schema({
     lastName:String
 });
 
-const User=mongoose.model('User',userSchema);
+const accountSchema=mongoose.Schema({
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:true
+    },
+    balance:Number
+})
 
-module.exports={User}
+const User=mongoose.model('User',userSchema);
+const Account=mongoose.model("Acoount",accountSchema);
+
+module.exports={User,Account}
