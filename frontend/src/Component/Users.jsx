@@ -4,8 +4,8 @@ import Button from "../Component/FormComponent/Button"
 export const Users = () => {
     // Replace with backend call
     const [users, setUsers] = useState([{
-        firstName: "Harkirat",
-        lastName: "Singh",
+        firstName: "User",
+        lastName: "name",
         _id: 1
     }]);
 
