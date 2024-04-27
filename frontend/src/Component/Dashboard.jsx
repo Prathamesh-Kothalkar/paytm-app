@@ -1,6 +1,37 @@
+import { useEffect, useState } from "react";
 import { Users } from "./Users";
+import axios from "axios";
 
 export default function Dashboard(){
+    const [username,setUsername]=useState("user");
+    const [amount,setBalance]=useState(0)
+    const token=localStorage.getItem("token");
+    console.log(token)
+
+    useEffect(()=>{
+       const name = async ()=>{
+            console.log("running")
+            const res_name=await axios.get("http://localhost:3000/api/v1/user/name",{
+               headers:{
+                authorization:"Bearer "+token
+               } 
+            })
+           setUsername(res_name.data.name)
+        }
+        const balance = async ()=>{
+            const res_bal=await axios.get("http://localhost:3000/api/v1/account/balance",{
+                headers:{
+                    authorization:"Bearer "+token
+                }
+            })
+
+            setBalance(res_bal.data.balance)
+
+        }
+        name();
+        balance();
+    },[])
+
     return <>
         <div className="">
             <div className="">
@@ -10,11 +41,11 @@ export default function Dashboard(){
         </div>
         <div className="flex ">
             <div className="flex flex-col justify-center h-full mr-4">
-                Hello
+                Hello {username}
             </div>
             <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
                 <div className="flex flex-col justify-center h-full text-xl">
-                    U
+                    {username[0]}
                 </div>
             </div>
         </div>
@@ -25,7 +56,7 @@ export default function Dashboard(){
             Your balance
         </div>
         <div className="font-semibold ml-4 text-lg">
-            Rs 
+            Rs {Math.floor(amount)}
         </div>
     </div>
     <Users/>
