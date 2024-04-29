@@ -3,8 +3,21 @@ import Signup from "./Component/Signup"
 import Signin from "./Component/Signin"
 import Dashboard from "./Component/Dashboard"
 import SendMoney from "./Component/SendMoney"
+import { useEffect, useState } from "react"
+import axios from "axios"
 function App() {
+  const [isLogin,setIsLogin]=useState();
+  const token=localStorage.getItem("token");
+  useEffect(()=>{
+  
+    axios.get("http://localhost:3000/api/v1/user/name",{
+    headers:{
+      authorization:"Bearer "+token
+    }
+   }).then((res)=>{console.log(res.data);setIsLogin(true)}).catch((err)=>{console.log(err);setIsLogin(false)})
 
+  },[])
+  
   return (
     <>
       <BrowserRouter>
@@ -13,6 +26,7 @@ function App() {
           <Route path="/signin" element={<Signin/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/send" element={<SendMoney/>}/>
+          <Route path="/" element={isLogin?<Dashboard/>:<Signin/>}/>
         </Routes>
       </BrowserRouter>
     </>

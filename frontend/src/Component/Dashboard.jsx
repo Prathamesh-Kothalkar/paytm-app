@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { Users } from "./Users";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard(){
     const [username,setUsername]=useState("user");
     const [amount,setBalance]=useState(0)
     const token=localStorage.getItem("token");
+    const navigate=useNavigate();
     console.log(token)
 
     useEffect(()=>{
+        navigate("/dashboard")
        const name = async ()=>{
             console.log("running")
             const res_name=await axios.get("http://localhost:3000/api/v1/user/name",{
@@ -32,6 +35,14 @@ export default function Dashboard(){
         balance();
     },[])
 
+    function logout(){
+       if(confirm("are u sure to logout")){
+        localStorage.clear();
+        navigate("/signin");
+        nav
+       }
+    }
+
     return <>
         <div className="">
             <div className="">
@@ -43,11 +54,11 @@ export default function Dashboard(){
             <div className="flex flex-col justify-center h-full mr-4">
                 Hello {username}
             </div>
-            <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
+            <button onClick={()=>{logout()}} className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2 cursor-pointer">
                 <div className="flex flex-col justify-center h-full text-xl">
                     {username[0]}
                 </div>
-            </div>
+            </button>
         </div>
     </div>
             </div>
