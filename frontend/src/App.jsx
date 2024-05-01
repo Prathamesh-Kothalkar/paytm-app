@@ -5,6 +5,7 @@ import Dashboard from "./Component/Dashboard"
 import SendMoney from "./Component/SendMoney"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import {Transactions} from "./Component/Transactions"
 function App() {
   const [isLogin,setIsLogin]=useState();
   const token=localStorage.getItem("token");
@@ -26,6 +27,7 @@ function App() {
           <Route path="/signin" element={<Signin/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/send" element={<SendMoney/>}/>
+          <Route path="/trnx" element={<Transactions/>}/>
           <Route path="/" element={isLogin?<Dashboard/>:<Signin/>}/>
         </Routes>
       </BrowserRouter>

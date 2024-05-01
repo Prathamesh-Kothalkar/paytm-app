@@ -18,7 +18,33 @@ const accountSchema=mongoose.Schema({
     balance:Number
 })
 
+const transactionSchema =mongoose.Schema({
+    senderId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    receiverId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    amount: Number,
+    type: {
+        type: String,
+        enum: ['debit', 'credit'],
+        required: true
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+
+
 const User=mongoose.model('User',userSchema);
 const Account=mongoose.model("Acoount",accountSchema);
+const Transaction=mongoose.model("Transaction",transactionSchema);
 
-module.exports={User,Account}
+module.exports={User,Account,Transaction}

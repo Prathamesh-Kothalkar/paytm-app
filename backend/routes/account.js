@@ -1,6 +1,6 @@
 const express = require('express');
 const {authMiddleWare}=require("../Auth/middleware")
-const {Account}=require("../db");
+const {Account, Transaction}=require("../db");
 const { default: mongoose } = require('mongoose');
 const router = express.Router();
 
@@ -54,6 +54,13 @@ router.post("/transfer",authMiddleWare,async (req,res)=>{
         }
     }).session(session)
 
+    await Transaction.create({
+        senderId:req.userId,
+        receiverId:to,
+        amount:amount,
+        type: 'debit'
+    })
+
     //credited to reciever
     await Account.updateOne({
         userId:to
@@ -62,6 +69,13 @@ router.post("/transfer",authMiddleWare,async (req,res)=>{
             balance:amount
         }
     }).session(session)
+
+    await Transaction.create({
+        senderId:to,
+        receiverId:req.userId,
+        amount,
+        type: 'credit'
+    })
 
     //commit transaction
     await session.commitTransaction();
