@@ -1,5 +1,5 @@
 
-## Build a basic version of Paytm
+## Building a basic version of Paytm
 
 # Technologies used
 - MERN STACK
@@ -16,3 +16,4 @@
 
 # Output
 ![paytm](https://github.com/Prathamesh-Kothalkar/paytm-app/assets/116967053/0957ce43-5a86-4b24-9f86-7531bce249fb)
+![Screenshot 2024-05-01 150640](https://github.com/Prathamesh-Kothalkar/paytm-app/assets/116967053/686be6b5-de48-4d34-8ad8-4bad60c883a2)
